@@ -61,26 +61,36 @@ public class CafeMenu {
             System.out.println("Invalid choice. Please enter 1 to 5.");
         }
     }
-
     private void placeOrderFlow() {
-        System.out.print("Enter order name: ");
-        String order = sc.nextLine();
+    System.out.print("Enter order name: ");
+    String order = sc.nextLine();
 
-        int priority;
-        while (true) {
-            System.out.print("Enter priority (1 = High, 2 = Normal): ");
-            if (sc.hasNextInt()) {
-                priority = sc.nextInt();
-                sc.nextLine();
-                if (priority == 1 || priority == 2) {
-                    break;
-                }
-            } else {
-                sc.nextLine();
-            }
-            System.out.println("Invalid priority. Enter 1 or 2.");
+    String type;
+    while (true) {
+        System.out.print("Enter order type (Normal / Takeaway): ");
+        type = sc.nextLine();
+        if (type.equalsIgnoreCase("Normal") || type.equalsIgnoreCase("Takeaway")) {
+            break;
         }
-
-        orderQueue.placeOrder(order, priority);
+        System.out.println("Invalid type. Enter Normal or Takeaway.");
     }
+
+    int priority;
+    while (true) {
+        System.out.print("Enter priority (1 = VIP, 2 = Normal): ");
+        if (sc.hasNextInt()) {
+            priority = sc.nextInt();
+            sc.nextLine();
+            if (priority == 1 || priority == 2) {
+                break;
+            }
+        } else {
+            sc.nextLine();
+        }
+        System.out.println("Invalid priority. Enter 1 or 2.");
+    }
+
+    // ✅ ONLY THIS LINE (IMPORTANT)
+    orderQueue.placeOrder(order, type, priority);
+}
 }

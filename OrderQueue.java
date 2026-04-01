@@ -1,57 +1,51 @@
 import java.util.*;
 
 public class OrderQueue {
-    private Queue<String> highPriorityQueue;
-    private Queue<String> normalQueue;
-
+    private PriorityQueue<Order> vipQueue;
+    private Queue<Order> normalQueue;
+    private int orderCounter = 1;
     public OrderQueue() {
-        highPriorityQueue = new LinkedList<>();
+        vipQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.id));
         normalQueue = new LinkedList<>();
     }
-    public void placeOrder(String order, int priority) {
+    public void placeOrder(String name, String type, int priority) {
+        Order order = new Order(name, type, orderCounter++);
+
         if (priority == 1) {
-            highPriorityQueue.offer(order);
-            System.out.println("High priority order placed successfully.");
+            vipQueue.offer(order);
+            System.out.println("VIP order placed successfully.");
         } else {
             normalQueue.offer(order);
             System.out.println("Normal order placed successfully.");
         }
     }
     public void prepareOrder() {
-        if (!highPriorityQueue.isEmpty()) {
-            System.out.println("Preparing (High Priority): " + highPriorityQueue.poll());
+        if (!vipQueue.isEmpty()) {
+            System.out.println("Preparing VIP Order: " + vipQueue.poll());
         } else if (!normalQueue.isEmpty()) {
-            System.out.println("Preparing (Normal): " + normalQueue.poll());
+            System.out.println("Preparing Normal Order: " + normalQueue.poll());
         } else {
             System.out.println("No orders to prepare.");
         }
     }
     public void viewOrders() {
-        if (highPriorityQueue.isEmpty() && normalQueue.isEmpty()) {
+        if (vipQueue.isEmpty() && normalQueue.isEmpty()) {
             System.out.println("No pending orders.");
             return;
         }
 
-        System.out.println("\n--- High Priority Orders ---");
-        if (highPriorityQueue.isEmpty()) {
-            System.out.println("None");
-        } else {
-            for (String order : highPriorityQueue) {
-                System.out.println(order);
-            }
+        System.out.println("\n VIP Orders ");
+        for (Order o : vipQueue) {
+            System.out.println(o);
         }
 
-        System.out.println("\n--- Normal Orders ---");
-        if (normalQueue.isEmpty()) {
-            System.out.println("None");
-        } else {
-            for (String order : normalQueue) {
-                System.out.println(order);
-            }
+        System.out.println("\n  Normal Orders ");
+        for (Order o : normalQueue) {
+            System.out.println(o);
         }
     }
+
     public void totalOrders() {
-        int total = highPriorityQueue.size() + normalQueue.size();
-        System.out.println("Total orders waiting: " + total);
+        System.out.println("Total orders: " + (vipQueue.size() + normalQueue.size()));
     }
 }
