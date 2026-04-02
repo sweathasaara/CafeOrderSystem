@@ -18,7 +18,8 @@ public class CafeMenu {
             System.out.println("2. Prepare Next Order");
             System.out.println("3. View Orders by Priority");
             System.out.println("4. Total Orders");
-            System.out.println("5. Exit");
+            System.out.println("5. Update Order Status");
+            System.out.println("6. Exit");
 
             choice = getValidChoice();
 
@@ -36,15 +37,28 @@ public class CafeMenu {
                     orderQueue.totalOrders();
                     break;
                 case 5:
-                    System.out.println("Exiting application. Thank you.");
+                    updateStatusFlow();
                     break;
+
+case 6:
+    System.out.println("Exiting application. Thank you.");
+    break;
             }
 
         } while (choice != 5);
 
         sc.close();
     }
+    private void updateStatusFlow() {
+    System.out.print("Enter Order ID: ");
+    int id = sc.nextInt();
+    sc.nextLine();
 
+    System.out.print("Enter new status (PENDING / PREPARING / READY / COMPLETED): ");
+    String status = sc.nextLine();
+
+    orderQueue.updateOrderStatus(id, status);
+}
     private int getValidChoice() {
         int choice;
         while (true) {
@@ -74,6 +88,7 @@ public class CafeMenu {
         }
         System.out.println("Invalid type. Enter Normal or Takeaway.");
     }
+    
 
     int priority;
     while (true) {
@@ -89,8 +104,6 @@ public class CafeMenu {
         }
         System.out.println("Invalid priority. Enter 1 or 2.");
     }
-
-    // ✅ ONLY THIS LINE (IMPORTANT)
     orderQueue.placeOrder(order, type, priority);
 }
 }

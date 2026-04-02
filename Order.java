@@ -1,16 +1,25 @@
 public class Order {
-    String name;
-    String type; // Normal / Takeaway
     int id;
+    String name;
+    String type;
+    String status;
 
-    public Order(String name, String type, int id) {
+    public Order(int id, String name, String type) {
+
+        this.id = id;
         this.name = name;
         this.type = type;
-        this.id = id;
+        this.status = "PENDING"; // default status
+    
     }
 
-    @Override
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+
     public String toString() {
-        return "ID: " + id + ", Order: " + name + ", Type: " + type;
+        return "ID: " + id + ", Order: " + name + ", Type: " + type + ", Status: " + status;
     }
 }
